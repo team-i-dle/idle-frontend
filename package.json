@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "idle-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "axios": "^0.27.2",
     "next": "12.2.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-query": "^3.39.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@emotion/babel-plugin": "^11.3.0",
+    "@emotion/babel-preset-css-prop": "^11.2.0",
     "@types/node": "18.0.5",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
