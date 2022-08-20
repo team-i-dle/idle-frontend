@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "svgr": "npx svgr --typescript --no-dimensions -d ./src/components/Icon ./svg --replace-attr-values `#000={props.color}`"
+    "svgr": "npx svgr --typescript --no-dimensions -d ./src/components/Icon ./src/assets/svg --replace-attr-values '#000={props.color}'"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
