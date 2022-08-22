@@ -6,10 +6,25 @@ import { colors, fonts } from 'constants/theme';
 import { useRouter } from 'next/router';
 import Step1 from './step1';
 import Step2 from './step2';
+import { FormProvider, useForm } from 'react-hook-form';
 
 export default function New() {
   const { query } = useRouter();
-  console.log(query);
+  const defaultValues = useMemo(
+    () => ({
+      title: '',
+      url: '',
+      salary: '2',
+      domain: '2',
+      location: '2',
+      welfare: '2',
+      company: '2',
+      growth: '2',
+      culture: '2',
+    }),
+    []
+  );
+  const method = useForm({ defaultValues });
   const renderComponent = useMemo(() => {
     if (query.step === '1' || !query.step) {
       return <Step1 />;
@@ -29,7 +44,15 @@ export default function New() {
         새 공고 등록
       </Header>
       {/* <URLBox><a href={}></a></URLBox> */}
-      {renderComponent}
+      <FormProvider {...method}>
+        <form
+          onSubmit={method.handleSubmit((data) => {
+            console.log(data);
+          })}
+        >
+          {renderComponent}
+        </form>
+      </FormProvider>
     </Wrap>
   );
 }

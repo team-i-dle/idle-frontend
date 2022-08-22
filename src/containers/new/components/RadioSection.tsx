@@ -1,7 +1,8 @@
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import styled from '@emotion/styled';
 import Input from 'components/Input';
 import { colors, fonts } from 'constants/theme';
-import React from 'react';
 
 interface RadioSectionProps {
   title: string;
@@ -9,33 +10,34 @@ interface RadioSectionProps {
 }
 
 const RadioSection = ({ title, name }: RadioSectionProps) => {
+  const { register } = useFormContext();
   return (
     <Wrap>
       <RadioTitle>{title}</RadioTitle>
       <RadioWrap>
         <Input.Radio
           label="별로예요"
-          name={name}
           id={`${name}1`}
           value={1}
           align="column"
           color="primary"
+          {...register(name)}
         />
         <Input.Radio
           label="적당해요"
-          name={name}
           id={`${name}2`}
           value={2}
           align="column"
           color="primary"
+          {...register(name)}
         />
         <Input.Radio
           label="만족해요"
-          name={name}
           id={`${name}3`}
           value={3}
           align="column"
           color="primary"
+          {...register(name)}
         />
       </RadioWrap>
     </Wrap>

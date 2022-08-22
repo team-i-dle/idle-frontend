@@ -1,3 +1,8 @@
+// type ColorsType = {
+//   [index: string]: string,
+
+// }
+
 export const colors = {
   primary: '#4DF2B7',
   primary05: 'rgba(77, 242, 183, 0.05)',

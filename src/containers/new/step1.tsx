@@ -1,33 +1,41 @@
+import React, { useRef } from 'react';
 import styled from '@emotion/styled';
+import ButtonGroup from 'components/ButtonGroup';
+import Button from 'components/Button';
 import Divider from 'components/Divider';
 import { Close, Link } from 'components/Icon';
 import Input from 'components/Input';
 import { colors, fonts } from 'constants/theme';
-import React, { useRef } from 'react';
 import RadioSection from './components/RadioSection';
+import { useRouter } from 'next/router';
+import { useFormContext } from 'react-hook-form';
 
 const Step1 = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+  const {
+    register,
+    getValues,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <div>
-      {/* <Input.Text
-        ref={inputRef}
-        type="numberType"
-        placeholder="www.jopmark.com"
-        // className="error"
-        // startAdornment={<Close color={colors.error} width="20" />}
-        endAdornment={<span>만원</span>}
-      />
-       */}
       <LinkSection>
         <LinkWrap>
           <Input.Text
             placeholder="http://jopmark.please.com"
             startAdornment={<Link color={colors.gray05} width="20" />}
+            id="url"
+            className={errors.url && 'error'}
+            {...register('url', { required: true })}
           />
         </LinkWrap>
         <SubTitle>채용공고명</SubTitle>
-        <Input.Text />
+        <Input.Text
+          id="title"
+          className={errors.title && 'error'}
+          {...register('title', { required: true })}
+        />
       </LinkSection>
       <Divider />
       <Section>
@@ -43,6 +51,27 @@ const Step1 = () => {
         <RadioSection title="성장 가능성" name="growth" />
         <RadioSection title="사내문화/좋은 동료" name="culture" />
       </Section>
+      <ButtonGroup merge>
+        <Button themeColor="gray" full>
+          나중에
+        </Button>
+        <Button
+          themeColor="primary"
+          full
+          onClick={() => {
+            // sessionStorage.setItem('step1', ``);
+            const titleValue = getValues('title');
+            const urlValue = getValues('url');
+            if (!titleValue || !urlValue) {
+              return;
+            }
+            router.push('/new?step=2');
+          }}
+          // type="button"
+        >
+          다음단계
+        </Button>
+      </ButtonGroup>
     </div>
   );
 };
