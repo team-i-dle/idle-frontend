@@ -9,5 +9,5 @@ export const uncomma = (str: string) => {
 }
 
 export const inputNumberFormat = (obj: {value: string}) => {
-  obj.value = comma(uncomma(obj.value));
+  return comma(uncomma(obj.value));
 }

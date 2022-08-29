@@ -25,11 +25,11 @@ const Text = React.forwardRef<HTMLInputElement, CustomInputProps>(
     const isNumber = props.type === 'numberType';
 
     const onAddComma = useCallback(
-      (e: React.KeyboardEvent<HTMLInputElement>) => {
+      (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!isNumber) return;
-        inputNumberFormat(e.target);
+        e.target.value = inputNumberFormat(e.target);
       },
-      [isNumber]
+      [isNumber, inputNumberFormat]
     );
 
     useEffect(() => {
@@ -42,18 +42,18 @@ const Text = React.forwardRef<HTMLInputElement, CustomInputProps>(
       return (
         <InputWrap isStart endWidth={0}>
           <Start>{props.startAdornment}</Start>
-          <Input onKeyDown={onAddComma} {...props} ref={ref} />
+          <Input {...props} ref={ref} />
         </InputWrap>
       );
     } else if (props.endAdornment) {
       return (
         <InputWrap isStart={false} endWidth={endWidth}>
-          <Input onKeyDown={onAddComma} {...props} ref={ref} />
+          <Input {...props} onChange={onAddComma} ref={ref} />
           <End ref={endAdornmentRef}>{props.endAdornment}</End>
         </InputWrap>
       );
     }
-    return <Input onKeyDown={onAddComma} {...props} ref={ref} />;
+    return <Input {...props} ref={ref} />;
   }
 );
 
