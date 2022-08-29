@@ -28,6 +28,8 @@ transition: all 0.3s;
   background-color: ${colors.secondary01};
   border-bottom-color: ${colors.gray01};
   color: ${colors.gray05};
+  -webkit-text-fill-color: ${colors.gray05};
+  opacity: 1; /* required on iOS */
 };
 &.error {
   color: ${colors.error};
