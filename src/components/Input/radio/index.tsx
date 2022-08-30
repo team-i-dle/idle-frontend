@@ -38,6 +38,8 @@ const Radio = React.forwardRef<HTMLInputElement, CustomInputProps>(
   }
 );
 
+Radio.displayName = 'Radio';
+
 export default Radio;
 
 const RadioWrap = styled.div`

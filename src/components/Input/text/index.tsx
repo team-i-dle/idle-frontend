@@ -29,7 +29,7 @@ const Text = React.forwardRef<HTMLInputElement, CustomInputProps>(
         if (!isNumber) return;
         e.target.value = inputNumberFormat(e.target);
       },
-      [isNumber, inputNumberFormat]
+      [isNumber]
     );
 
     useEffect(() => {
@@ -56,6 +56,8 @@ const Text = React.forwardRef<HTMLInputElement, CustomInputProps>(
     return <Input {...props} ref={ref} />;
   }
 );
+
+Text.displayName = 'Text';
 
 export default Text;
 

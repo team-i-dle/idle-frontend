@@ -15,6 +15,8 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, CustomTextareaProps>(
   }
 );
 
+Textarea.displayName = 'Textarea';
+
 export default Textarea;
 
 const TextareaTag = styled.textarea<CustomTextareaProps>`
