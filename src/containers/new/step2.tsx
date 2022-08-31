@@ -8,8 +8,8 @@ import { Link } from 'components/Icon';
 import ButtonGroup from 'components/ButtonGroup';
 import Button from 'components/Button';
 import Divider from 'components/Divider';
-import MemoSection from './components/MemoSection';
 import noticeCriteria from 'constants/noticeCriteria';
+import MemoSection from './components/MemoSection';
 
 const Step2 = () => {
   const { register, getValues } = useFormContext();

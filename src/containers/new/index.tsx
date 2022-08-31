@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import styled from '@emotion/styled';
 import Header from 'components/Header';
 import { Close } from 'components/Icon';
@@ -6,7 +6,29 @@ import { colors, fonts } from 'constants/theme';
 import { useRouter } from 'next/router';
 import Step1 from './step1';
 import Step2 from './step2';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import httpClient from 'remotes/index';
+import noticeCriteria from 'constants/noticeCriteria';
+
+type FormValues = {
+  [index: string]: string;
+  title: string;
+  url: string;
+  salary: string;
+  salaryMemo: string;
+  domain: string;
+  domainMemo: string;
+  location: string;
+  locationMemo: string;
+  welfare: string;
+  welfareMemo: string;
+  company: string;
+  companyMemo: string;
+  growth: string;
+  growthMemo: string;
+  culture: string;
+  cultureMemo: string;
+};
 
 export default function New() {
   const { query } = useRouter();
@@ -24,13 +46,41 @@ export default function New() {
     }),
     []
   );
-  const method = useForm({ defaultValues });
+
+  // CORS Test
+  useEffect(() => {
+    const getData = async () => {
+      await httpClient.get('/api/v1/member/1/keyword');
+    };
+
+    getData();
+  }, []);
+  const method = useForm<FormValues>({ defaultValues });
   const renderComponent = useMemo(() => {
     if (query.step === '1' || !query.step) {
       return <Step1 />;
     }
     return <Step2 />;
   }, [query]);
+
+  const onSubmit: SubmitHandler<FormValues> = useCallback(async (data) => {
+    const reqData = {
+      title: data.title,
+      url: data.url,
+      notice_criteria: Object.keys(noticeCriteria).map((key) => ({
+        criteria_name: noticeCriteria[key],
+        score: Number(data[key]),
+        description: data[`${key}Memo`],
+      })),
+    };
+    console.log(reqData);
+    if (query.step === '2') {
+      await httpClient.post(
+        `/api/v1/notice?memberId=${process.env.NEXT_PUBLIC_MEMBER_ID}`,
+        reqData
+      );
+    }
+  }, []);
 
   return (
     <Wrap>
@@ -45,13 +95,7 @@ export default function New() {
       </Header>
       {/* <URLBox><a href={}></a></URLBox> */}
       <FormProvider {...method}>
-        <form
-          onSubmit={method.handleSubmit((data) => {
-            console.log(data);
-          })}
-        >
-          {renderComponent}
-        </form>
+        <form onSubmit={method.handleSubmit(onSubmit)}>{renderComponent}</form>
       </FormProvider>
     </Wrap>
   );
