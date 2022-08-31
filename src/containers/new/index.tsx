@@ -47,14 +47,6 @@ export default function New() {
     []
   );
 
-  // CORS Test
-  useEffect(() => {
-    const getData = async () => {
-      await httpClient.get('/api/v1/member/1/keyword');
-    };
-
-    getData();
-  }, []);
   const method = useForm<FormValues>({ defaultValues });
   const renderComponent = useMemo(() => {
     if (query.step === '1' || !query.step) {
