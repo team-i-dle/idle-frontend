@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { colors } from 'constants/theme';
+import { colors, fonts } from 'constants/theme';
 // import './style.ts';
 
 interface HeaderProps {
@@ -29,7 +29,9 @@ const Wrap = styled.div<{ isButton: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   color: ${colors.gray06};
+  ${fonts.s16};
   padding: ${({ isButton }) => (isButton ? '14px 20px' : '16px 20px')};
   ${({ isButton }) => !isButton && `justify-content: center;`}
 `;

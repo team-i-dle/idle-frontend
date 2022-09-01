@@ -9,7 +9,7 @@ import BottomNavigation from 'components/BottomNavigation';
 import Button from 'components/Button';
 import { useRouter } from 'next/router';
 
-const defaultData = [
+export const defaultData = [
   {
     criteria_name: '연봉',
     member_criteria_id: 3,
