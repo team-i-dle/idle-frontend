@@ -1,13 +1,8 @@
-import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
-import { useQuery } from 'react-query';
-import {
-  // DragDropContext,
-  // Draggable,
-  // Droppable,
-  DraggingStyle,
-  NotDraggingStyle,
-} from 'react-beautiful-dnd';
+import { useRouter } from 'next/router';
+import { useMutation, useQuery } from 'react-query';
+import { DraggingStyle, NotDraggingStyle } from 'react-beautiful-dnd';
 import Header from 'components/Header';
 import { Close, DragDots, Home } from 'components/Icon';
 import { colors, fonts } from 'constants/theme';
@@ -54,9 +49,19 @@ const getItemStyle = (
 
 const Modify = () => {
   const getData = async () => {
-    // return httpClient.get('/api/v1/member/1/keyword').then((res) => res.data);
-    return;
+    return httpClient
+      .get(`/api/v1/member/${process.env.NEXT_PUBLIC_MEMBER_ID}/keyword`)
+      .then((res) => res.data.response);
   };
+
+  const modifyData = async (data: {}) => {
+    return httpClient.put(
+      `/api/v1/member/${process.env.NEXT_PUBLIC_MEMBER_ID}/keyword`,
+      data
+    );
+  };
+
+  const router = useRouter();
 
   const {
     isLoading,
@@ -66,11 +71,29 @@ const Modify = () => {
     refetchOnWindowFocus: false,
   });
 
+  const { mutate } = useMutation(modifyData, {
+    onSuccess: () => {
+      console.log('성공');
+      router.push('/keyword');
+    },
+  });
+
   const [list, setList] = useState([...data]);
+
+  const modifyHandler = useCallback(() => {
+    const putData = list.map(
+      ({ member_criteria_id, criteria_name }, index) => ({
+        member_criteria_id,
+        criteria_name,
+        weight: index + 1,
+        used: true,
+      })
+    );
+    mutate({ member_criteria: putData });
+  }, [list]);
 
   const onDragEnd = useCallback(
     (result: any) => {
-      console.log(result);
       if (!result.destination) {
         return;
       }
@@ -102,12 +125,22 @@ const Modify = () => {
     <Wrap>
       <Header
         leftButton={
-          <button onClick={() => {}} style={{ display: 'flex' }}>
+          <button
+            onClick={() => {
+              router.push('/keyword');
+            }}
+            style={{ display: 'flex' }}
+          >
             <Close color={colors.gray06} width="24" />
           </button>
         }
         rightButton={
-          <button onClick={() => {}} style={{ display: 'flex' }}>
+          <button
+            onClick={() => {
+              router.push('/');
+            }}
+            style={{ display: 'flex' }}
+          >
             <Home width="24" color={colors.gray06} />
           </button>
         }
@@ -162,6 +195,7 @@ const Modify = () => {
       <Button
         full
         style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}
+        onClick={modifyHandler}
       >
         저장하기
       </Button>
