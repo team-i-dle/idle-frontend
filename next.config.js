@@ -2,6 +2,14 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: `http://115.85.182.34:8081/:path*`,
+      },
+    ];
+  },
 };
 
 module.exports = {
