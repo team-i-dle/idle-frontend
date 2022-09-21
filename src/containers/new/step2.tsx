@@ -35,6 +35,7 @@ const Step2 = () => {
     },
     []
   );
+
   return (
     <div>
       <Info>
@@ -44,7 +45,9 @@ const Step2 = () => {
           value={getValues('url')}
         />
         <InfoBox>
-          <Title>{getValues('title')}</Title>
+          <TitleWrap>
+            <Title>{getValues('title')}</Title>
+          </TitleWrap>
           <GridList>
             {Object.keys(noticeCriteria).map((key) => (
               <Grid key={key}>
@@ -103,13 +106,21 @@ const InfoBox = styled.div`
   padding: 16px 12px;
 `;
 
+const TitleWrap = styled.div`
+  padding-right: 5px;
+`;
+
 const Title = styled.span`
   ${fonts.s20};
+  color: ${colors.secondary};
+  font-weight: 600;
   padding: 2px 8px;
   border-radius: 100px;
   background-color: ${colors.primary};
-  color: ${colors.secondary};
-  font-weight: 600;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  line-height: 34px;
+  word-break: keep-all;
 `;
 
 const GridList = styled.div`

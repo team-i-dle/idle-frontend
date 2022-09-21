@@ -35,6 +35,10 @@ export const colors = {
 };
 
 export const fonts = {
+  s10: {
+    fontSize: '10px',
+    lineHeight: '12px',
+  },
   s12: {
     fontSize: '12px',
     lineHeight: '14.4px'

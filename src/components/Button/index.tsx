@@ -5,7 +5,7 @@ import { colors, fonts } from 'constants/theme';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
-  themeColor: string;
+  themeColor?: string;
   isFill?: boolean;
   outline?: boolean;
   underLine?: boolean;
@@ -36,8 +36,9 @@ const Wrap = styled.button<ButtonProps>`
   position: relative;
   border-radius: 4px;
   font-weight: 600;
-  padding: 14.5px 16px;
+  padding: 14.5px 16px calc(env(safe-area-inset-bottom) + 14.5px);
   border-radius: 2px;
+  transition: all 0.3s;
   ${fonts.s16};
   ${({ isFill, themeColor }) =>
     isFill &&
@@ -54,8 +55,16 @@ const Wrap = styled.button<ButtonProps>`
       `}
     `};
   ${({ isFill }) => !isFill && css``};
-  ${({ outline }) => outline && css``};
-  ${({ outline }) => !outline && css``};
+  ${({ outline }) =>
+    outline &&
+    css`
+      background: none;
+      border: 1px solid ${colors.primary};
+      color: ${colors.primary};
+      &:active {
+        background-color: ${colors.primary10};
+      }
+    `};
   ${({ full }) =>
     full &&
     css`

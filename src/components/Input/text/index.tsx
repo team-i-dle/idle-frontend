@@ -18,7 +18,7 @@ type CustomInputProps = InputProps & {
 };
 
 const Text = React.forwardRef<HTMLInputElement, CustomInputProps>(
-  (props, ref) => {
+  ({ style, ...props }, ref) => {
     const endAdornmentRef = useRef<HTMLSpanElement>(null);
     const [endWidth, setEndWidth] = useState(0);
 
@@ -40,20 +40,20 @@ const Text = React.forwardRef<HTMLInputElement, CustomInputProps>(
 
     if (props.startAdornment) {
       return (
-        <InputWrap isStart endWidth={0}>
+        <InputWrap isStart endWidth={0} style={style}>
           <Start>{props.startAdornment}</Start>
           <Input {...props} ref={ref} />
         </InputWrap>
       );
     } else if (props.endAdornment) {
       return (
-        <InputWrap isStart={false} endWidth={endWidth}>
+        <InputWrap isStart={false} endWidth={endWidth} style={style}>
           <Input {...props} onChange={onAddComma} ref={ref} />
           <End ref={endAdornmentRef}>{props.endAdornment}</End>
         </InputWrap>
       );
     }
-    return <Input {...props} ref={ref} />;
+    return <Input {...props} style={style} ref={ref} />;
   }
 );
 
