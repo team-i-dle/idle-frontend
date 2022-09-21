@@ -3,6 +3,7 @@ export { default as DragDots } from "./DragDots";
 export { default as EditSimple } from "./EditSimple";
 export { default as HomeFill } from "./HomeFill";
 export { default as Home } from "./Home";
+export { default as IcoArrow } from "./IcoArrow";
 export { default as Launch } from "./Launch";
 export { default as Link } from "./Link";
 export { default as SelectNormal } from "./SelectNormal";
