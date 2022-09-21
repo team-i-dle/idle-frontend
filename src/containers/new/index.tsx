@@ -55,24 +55,27 @@ export default function New() {
     return <Step2 />;
   }, [query]);
 
-  const onSubmit: SubmitHandler<FormValues> = useCallback(async (data) => {
-    const reqData = {
-      title: data.title,
-      url: data.url,
-      notice_criteria: Object.keys(noticeCriteria).map((key) => ({
-        criteria_name: noticeCriteria[key],
-        score: Number(data[key]),
-        description: data[`${key}Memo`],
-      })),
-    };
-    console.log(reqData);
-    if (query.step === '2') {
-      await httpClient.post(
-        `/api/v1/notice?memberId=${process.env.NEXT_PUBLIC_MEMBER_ID}`,
-        reqData
-      );
-    }
-  }, []);
+  const onSubmit: SubmitHandler<FormValues> = useCallback(
+    async (data) => {
+      const reqData = {
+        title: data.title,
+        url: data.url,
+        notice_criteria: Object.keys(noticeCriteria).map((key) => ({
+          criteria_name: noticeCriteria[key],
+          score: Number(data[key]),
+          description: data[`${key}Memo`],
+        })),
+      };
+      console.log(reqData);
+      if (query.step === '2') {
+        await httpClient.post(
+          `/api/v1/notice?memberId=${process.env.NEXT_PUBLIC_MEMBER_ID}`,
+          reqData
+        );
+      }
+    },
+    [query.step]
+  );
 
   return (
     <Wrap>

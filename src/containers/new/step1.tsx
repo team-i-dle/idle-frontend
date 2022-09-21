@@ -60,6 +60,7 @@ const Step1 = () => {
           나중에
         </Button>
         <Button
+          type="button"
           themeColor="primary"
           full
           onClick={() => {
