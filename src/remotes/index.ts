@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const httpClient = axios.create({
-  baseURL: `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}`,
+  // baseURL: `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}`,
+  baseURL: process.env.NODE_ENV === 'production' ? `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}` : '/',
   withCredentials: true,
   headers: {
     'Cache-Control': 'no-cache',

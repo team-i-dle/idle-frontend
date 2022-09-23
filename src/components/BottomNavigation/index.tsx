@@ -40,11 +40,11 @@ const BottomNavigation = () => {
         </Tab>
       </Link>
       <Link href={'/mypage'}>
-        <Tab active={active('mypage')}>
-          {!active('mypage') && (
+        <Tab active={active('/mypage')}>
+          {!active('/mypage') && (
             <UserOutline width="24" color={colors.gray03} />
           )}
-          {active('mypage') && (
+          {active('/mypage') && (
             <UserFillWide width="24" color={colors.primary} />
           )}
           <Text>내정보</Text>

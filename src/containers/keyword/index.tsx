@@ -47,9 +47,9 @@ export const defaultData = [
 const Keyword = () => {
   const router = useRouter();
   const getData = async () => {
-    return httpClient
-      .get('/api/v1/member/1/keyword')
-      .then((res) => res.data.response);
+    return httpClient.get('/api/v1/member/1/keyword').then((res) => {
+      return res.data.response;
+    });
   };
 
   const {

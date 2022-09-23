@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 const linkAtom = atom({
-  key: 'linkState',
+  key: 'linkAtom',
   default: '',
 });
 
