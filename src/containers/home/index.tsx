@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import linkAtom, { withLink } from 'recoil/link';
 import BottomNavigation from 'components/BottomNavigation';
 import Header from 'components/Header';
-import styled from '@emotion/styled';
 import { colors, fonts } from 'constants/theme';
 import { IcoArrow } from 'components/Icon';
 import Input from 'components/Input';
@@ -10,14 +13,16 @@ import Divider from 'components/Divider';
 import Toast from './components/Toast';
 
 const Home = () => {
-  const [clipboard, setClipboard] = useState('');
+  const router = useRouter();
+  const setLink = useSetRecoilState(linkAtom);
+  const copyLink = useRecoilValue(withLink);
+
   useEffect(() => {
-    console.log(navigator);
     const readClipboard = async () => {
       if (!navigator || !navigator.clipboard) return;
       try {
         const text = await navigator.clipboard.readText();
-        setClipboard(text);
+        setLink(text);
       } catch (err) {
         console.error('Failed to copy!', err);
       }
@@ -54,13 +59,16 @@ const Home = () => {
         <SubTitle>내 공고보기</SubTitle>
         <List></List>
       </Content>
-      {!!clipboard && (
+      {!!copyLink && (
         <Toast
-          text={clipboard}
+          text={copyLink}
           button={
             <button
               type="button"
               style={{ ...fonts.s16, color: colors.primary, fontWeight: 700 }}
+              onClick={() => {
+                router.push('/new');
+              }}
             >
               새 공고 등록
             </button>

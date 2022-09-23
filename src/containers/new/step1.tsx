@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import ButtonGroup from 'components/ButtonGroup';
 import Button from 'components/Button';
@@ -10,14 +10,23 @@ import RadioSection from './components/RadioSection';
 import { useRouter } from 'next/router';
 import { useFormContext } from 'react-hook-form';
 import noticeCriteria from 'constants/noticeCriteria';
+import { withLink } from 'recoil/link';
+import { useRecoilValue } from 'recoil';
 
 const Step1 = () => {
   const router = useRouter();
   const {
     register,
     getValues,
+    setValue,
     formState: { errors },
   } = useFormContext();
+  const copyLink = useRecoilValue(withLink);
+
+  useEffect(() => {
+    if (!copyLink) return;
+    setValue('url', copyLink);
+  }, []);
 
   return (
     <div>
@@ -56,7 +65,18 @@ const Step1 = () => {
         ))}
       </Section>
       <ButtonGroup merge>
-        <Button themeColor="gray" full>
+        <Button
+          themeColor="gray"
+          full
+          type="button"
+          onClick={() => {
+            const a = confirm('나중에 등록?');
+            if (!a) {
+              return;
+            }
+            router.push('/');
+          }}
+        >
           나중에
         </Button>
         <Button

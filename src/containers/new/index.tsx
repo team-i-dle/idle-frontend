@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
+import linkAtom from 'recoil/link';
+import httpClient from 'remotes/index';
+import { colors, fonts } from 'constants/theme';
+import noticeCriteria from 'constants/noticeCriteria';
 import Header from 'components/Header';
 import { Close } from 'components/Icon';
-import { colors, fonts } from 'constants/theme';
-import { useRouter } from 'next/router';
 import Step1 from './step1';
 import Step2 from './step2';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import httpClient from 'remotes/index';
-import noticeCriteria from 'constants/noticeCriteria';
 
 type FormValues = {
   [index: string]: string;
@@ -31,7 +33,8 @@ type FormValues = {
 };
 
 export default function New() {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
+  const setLink = useSetRecoilState(linkAtom);
   const defaultValues = useMemo(
     () => ({
       title: '',
@@ -68,10 +71,15 @@ export default function New() {
       };
       console.log(reqData);
       if (query.step === '2') {
-        await httpClient.post(
-          `/api/v1/notice?memberId=${process.env.NEXT_PUBLIC_MEMBER_ID}`,
-          reqData
-        );
+        try {
+          await httpClient.post(
+            `/api/v1/notice?memberId=${process.env.NEXT_PUBLIC_MEMBER_ID}`,
+            reqData
+          );
+          setLink('');
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     [query.step]
@@ -81,7 +89,13 @@ export default function New() {
     <Wrap>
       <Header
         leftButton={
-          <button onClick={() => {}} style={{ display: 'flex' }}>
+          <button
+            onClick={() => {
+              push('/');
+            }}
+            type="button"
+            style={{ display: 'flex' }}
+          >
             <Close color={colors.gray06} width="24" />
           </button>
         }

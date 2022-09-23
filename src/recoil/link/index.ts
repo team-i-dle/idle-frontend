@@ -1,4 +1,5 @@
-import atom from './atom';
+import linkAtom from './atom';
+import withLink from './withLink';
 
-
-export default atom;
+export {withLink};
+export default linkAtom;
